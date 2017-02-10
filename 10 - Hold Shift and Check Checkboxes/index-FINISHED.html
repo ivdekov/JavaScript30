@@ -104,22 +104,22 @@
   </div>
 
 <script>
+
 const checkboxes = document.querySelectorAll('.inbox input[type="checkbox"]');
 
 let lastChecked;
 
-function handleCheck(e) {
+function handleCheck(event) {
   // Check if they had the shift key down
-  // AND check that they are checking it
+  // Check if they are checking it
   let inBetween = false;
-  if (e.shiftKey && this.checked) {
+  if (event.shiftKey && this.checked) {
     // go ahead and do what we please
     // loop over every single checkbox
     checkboxes.forEach(checkbox => {
       console.log(checkbox);
       if (checkbox === this || checkbox === lastChecked) {
         inBetween = !inBetween;
-        console.log('STarting to check them inbetween!');
       }
 
       if (inBetween) {
@@ -132,6 +132,48 @@ function handleCheck(e) {
 }
 
 checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck));
+
+// MY SOLUTION: Doesn't quite work //
+/*
+const items = document.querySelectorAll('.item');
+let shiftPressed = false;
+let currentIndex = null;
+let lastIndex = null;
+
+window.addEventListener('keydown', event => {
+  if (event.keyCode === 16) {
+    shiftPressed = true;
+  }
+});
+window.addEventListener('keyup', event => {
+  if (event.keyCode === 16) {
+    shiftPressed = false;
+  }
+});
+
+items.forEach(function (item, index) {
+  item.addEventListener('click', event => selectInput(event, index));
+});
+
+function selectInput(event, index) {
+  if (event.target.nodeName !== 'INPUT') return;
+  lastIndex = currentIndex;
+  currentIndex = index;
+  if (shiftPressed) {
+    highlightSeveral(lastIndex, currentIndex);
+  }
+}
+
+function highlightSeveral(lastIndex, currentIndex) {
+  if (!lastIndex || !currentIndex) return;
+  let smaller = lastIndex < currentIndex ? lastIndex : currentIndex;
+  const larger = lastIndex > currentIndex ? lastIndex : currentIndex;
+  while (smaller < larger) {
+    items[smaller].children[0].checked = !items[smaller].children[0].checked;
+    smaller++;
+  }
+}
+*/
 </script>
 </body>
 </html>
